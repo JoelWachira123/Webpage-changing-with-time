@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Time and Theme Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    #time {
+      font-size: 48px;
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    .morning {
+      background-color: #f7ce1b;
+      color: #333;
+    }
+
+    .afternoon {
+      background-color: #FFF3E0;
+      color: #222;
+    }
+
+    .night {
+      background-color: #2C3E50;
+      color: #ECF0F1;
+    }
+
+    .dark-mode {
+      background-color: #121212 !important;
+      color: #f0f0f0 !important;
+    }
+  </style>
+</head>
+<body id="body">
+
+  <h1>Dynamic Clock Webpage</h1>
+  <div id="time">Loading time...</div>
+  <button onclick="toggleDarkMode()">Toggle Light/Dark Mode</button>
+
+  <script>
+    function updateTimeAndBackground() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      // Display time
+      document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+
+      // Change background based on time
+      const body = document.getElementById('body');
+      body.classList.remove('morning', 'afternoon', 'night');
+
+      if (hours >= 6 && hours < 12) {
+        body.classList.add('morning');
+      } else if (hours >= 12 && hours < 18) {
+        body.classList.add('afternoon');
+      } else {
+        body.classList.add('night');
+      }
+    }
+
+    function toggleDarkMode() {
+      document.getElementById('body').classList.toggle('dark-mode');
+    }
+
+    // Initial call and update every second
+    updateTimeAndBackground();
+    setInterval(updateTimeAndBackground, 1000);
+  </script>
+</body>
+</html>
